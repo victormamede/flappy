@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7c7j2031s0qs"]
+
+[ext_resource type="FontFile" uid="uid://cfodidmcld8ew" path="res://assets/fonts/04B_30__.TTF" id="1_mh0y5"]
+[ext_resource type="Script" path="res://scripts/Menu.cs" id="1_o6pgl"]
+[ext_resource type="Script" path="res://scripts/Blink.cs" id="2_ufxeo"]
+
+[sub_resource type="Theme" id="Theme_m1sii"]
+default_font = ExtResource("1_mh0y5")
+Label/colors/font_outline_color = Color(0.180392, 0.133333, 0.184314, 1)
+Label/constants/outline_size = 8
+
+[node name="Menu" type="CanvasLayer"]
+script = ExtResource("1_o6pgl")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_m1sii")
+
+[node name="CenterContainer" type="CenterContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="Label" parent="Control/CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Press SPACE to start..."
+horizontal_alignment = 1
+script = ExtResource("2_ufxeo")
+Rate = 5.0
+
+[node name="Restart" type="Label" parent="Control/CenterContainer"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0.174056)
+layout_mode = 2
+text = "Press SPACE to restart"
+horizontal_alignment = 1
+script = ExtResource("2_ufxeo")
+Rate = 5.0
+
+[node name="Points" type="Label" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 28.0
+offset_right = 20.0
+offset_bottom = 48.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1

@@ -1,0 +1,43 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${env:GODOT4}",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "args": ["--path", "${workspaceRoot}"]
+    },
+    {
+      "name": "Launch (Select Scene)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${env:GODOT4}",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "args": [
+        "--path",
+        "${workspaceRoot}",
+        "${command:godot.csharp.getLaunchScene}"
+      ]
+    },
+    {
+      "name": "Launch Editor",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${env:GODOT4}",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "args": ["--path", "${workspaceRoot}", "--editor"]
+    },
+    {
+      "name": "Attach",
+      "type": "coreclr",
+      "request": "attach"
+    }
+  ]
+}

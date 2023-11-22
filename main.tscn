@@ -1,0 +1,130 @@
+[gd_scene load_steps=19 format=3 uid="uid://bgv6wl7v0007l"]
+
+[ext_resource type="Texture2D" uid="uid://bjkky1usq8v7h" path="res://assets/floor.png" id="1_jj3o6"]
+[ext_resource type="Script" path="res://scripts/Game.cs" id="1_lifvh"]
+[ext_resource type="Script" path="res://scripts/XFollow.cs" id="2_mspbr"]
+[ext_resource type="PackedScene" uid="uid://jianq6vnye46" path="res://scenes/player.tscn" id="3_778i3"]
+[ext_resource type="Script" path="res://scripts/PipeSpawner.cs" id="4_3owht"]
+[ext_resource type="PackedScene" uid="uid://db7ykq0uak2ox" path="res://scenes/pipes.tscn" id="5_7ytdk"]
+[ext_resource type="Script" path="res://scripts/Camera.cs" id="6_eetlj"]
+[ext_resource type="Texture2D" uid="uid://b3etqawtnkxo3" path="res://assets/background/sky.png" id="8_vhkn5"]
+[ext_resource type="Texture2D" uid="uid://bkvddj8rqpsye" path="res://assets/background/trunks.png" id="9_5pci2"]
+[ext_resource type="Texture2D" uid="uid://dh14h64lwi3d3" path="res://assets/background/clouds.png" id="9_ap3k5"]
+[ext_resource type="Texture2D" uid="uid://ctwweaq2a5tv5" path="res://assets/background/mountains.png" id="9_sr2tr"]
+[ext_resource type="Texture2D" uid="uid://wn286j32ax38" path="res://assets/background/clouds_near.png" id="10_3bx5g"]
+[ext_resource type="Texture2D" uid="uid://dl4awu1r8wr0r" path="res://assets/background/leaves.png" id="10_e1a6q"]
+[ext_resource type="PackedScene" uid="uid://b7c7j2031s0qs" path="res://scenes/menu.tscn" id="14_mtk0i"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_dl0fr"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3ix3k"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_if5vq"]
+texture = ExtResource("1_jj3o6")
+texture_region_size = Vector2i(32, 32)
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_srv1q"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_if5vq")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_lifvh")
+
+[node name="Player" parent="." instance=ExtResource("3_778i3")]
+position = Vector2(83, 174)
+JumpStrength = 230.0
+Speed = 200.0
+SpeedInc = 10.0
+
+[node name="XFollow" type="Node2D" parent="." node_paths=PackedStringArray("Target")]
+script = ExtResource("2_mspbr")
+Target = NodePath("../Player")
+
+[node name="Camera2D" type="Camera2D" parent="XFollow"]
+anchor_mode = 0
+script = ExtResource("6_eetlj")
+ShakeTime = 0.2
+
+[node name="PipeSpawner" type="Marker2D" parent="XFollow" node_paths=PackedStringArray("PipesContainer")]
+position = Vector2(736, 0)
+gizmo_extents = 25.0
+script = ExtResource("4_3owht")
+Pipe = ExtResource("5_7ytdk")
+PipesContainer = NodePath("../..")
+MaxPipes = 3
+MaxY = 250.0
+
+[node name="Timer" type="Timer" parent="XFollow/PipeSpawner"]
+wait_time = 1.2
+
+[node name="Bounds" type="StaticBody2D" parent="XFollow"]
+collision_layer = 2
+
+[node name="Ceiling" type="CollisionShape2D" parent="XFollow/Bounds"]
+shape = SubResource("WorldBoundaryShape2D_dl0fr")
+
+[node name="Floor" type="CollisionShape2D" parent="XFollow/Bounds"]
+position = Vector2(0, 328)
+shape = SubResource("WorldBoundaryShape2D_3ix3k")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Sky" type="Sprite2D" parent="ParallaxBackground"]
+texture = ExtResource("8_vhkn5")
+centered = false
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Clouds" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+texture = ExtResource("9_ap3k5")
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.2, 0.2)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Mountains" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+texture = ExtResource("9_sr2tr")
+centered = false
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.4, 0.4)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Clouds Near" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer4"]
+texture = ExtResource("10_3bx5g")
+centered = false
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.7, 0.7)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Trunks" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer5"]
+texture = ExtResource("9_5pci2")
+centered = false
+
+[node name="ParallaxLayer6" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.9, 0.9)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Leaves" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer6"]
+texture = ExtResource("10_e1a6q")
+centered = false
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.9, 0.9)
+motion_mirroring = Vector2(630, 0)
+
+[node name="TileMap" type="TileMap" parent="ParallaxBackground/ParallaxLayer"]
+tile_set = SubResource("TileSet_srv1q")
+cell_quadrant_size = 32
+format = 2
+layer_0/tile_data = PackedInt32Array(786431, 196608, 0, 655360, 65536, 0, 655361, 65536, 0, 655362, 65536, 0, 655363, 131072, 0, 655364, 131072, 0, 655365, 65536, 0, 655366, 65536, 0, 655367, 65536, 0, 655368, 131072, 0, 655369, 131072, 0, 655370, 131072, 0, 655371, 131072, 0, 655372, 131072, 0, 655373, 65536, 0, 655374, 131072, 0, 655375, 65536, 0, 655376, 131072, 0, 655377, 131072, 0, 655378, 131072, 0, 655379, 131072, 0, 655380, 131072, 0, 720916, 196608, 0, 720915, 196608, 0, 720914, 196608, 0, 720913, 196608, 0, 720912, 196608, 0, 720911, 196608, 0, 720910, 196608, 0, 720909, 196608, 0, 720908, 196608, 0, 720907, 196608, 0, 720906, 196608, 0, 720905, 196608, 0, 720904, 196608, 0, 720903, 196608, 0, 720902, 196608, 0, 720901, 196608, 0, 720900, 196608, 0, 720899, 196608, 0, 720898, 196608, 0, 720897, 196608, 0, 720896, 196608, 0, 720895, 65536, 0)
+
+[node name="Menu" parent="." instance=ExtResource("14_mtk0i")]

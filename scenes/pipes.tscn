@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://db7ykq0uak2ox"]
+
+[ext_resource type="Script" path="res://scripts/TreeBuilder.cs" id="1_lgcd0"]
+[ext_resource type="Texture2D" uid="uid://bndewu83narb8" path="res://assets/tree.png" id="3_dad8m"]
+[ext_resource type="Script" path="res://scripts/ScoreArea.cs" id="3_qgwjh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dptp7"]
+size = Vector2(48, 300)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_1vmj4"]
+b = Vector2(0, 90)
+
+[node name="Pipes" type="StaticBody2D"]
+collision_layer = 4
+
+[node name="TopSprites" type="Node2D" parent="."]
+position = Vector2(-12, 0)
+script = ExtResource("1_lgcd0")
+Texture = ExtResource("3_dad8m")
+TopFrame = 7
+FrameFrom = 4
+FrameTo = 6
+HFrames = 8
+Copies = 10
+VDirection = -1.0
+
+[node name="TopSprites2" type="Node2D" parent="."]
+position = Vector2(12, 0)
+script = ExtResource("1_lgcd0")
+Texture = ExtResource("3_dad8m")
+TopFrame = 7
+FrameFrom = 4
+FrameTo = 6
+HFrames = 8
+Copies = 10
+VDirection = -1.0
+
+[node name="Top" type="CollisionShape2D" parent="."]
+position = Vector2(0, -150)
+shape = SubResource("RectangleShape2D_dptp7")
+
+[node name="BottomSprites" type="Node2D" parent="."]
+position = Vector2(-12, 91)
+script = ExtResource("1_lgcd0")
+Texture = ExtResource("3_dad8m")
+TopFrame = 1
+FrameFrom = 2
+FrameTo = 3
+HFrames = 8
+Copies = 10
+
+[node name="BottomSprites2" type="Node2D" parent="."]
+position = Vector2(12, 91)
+script = ExtResource("1_lgcd0")
+Texture = ExtResource("3_dad8m")
+TopFrame = 1
+FrameFrom = 2
+FrameTo = 3
+HFrames = 8
+Copies = 10
+
+[node name="Bottom" type="CollisionShape2D" parent="."]
+position = Vector2(0, 239)
+shape = SubResource("RectangleShape2D_dptp7")
+
+[node name="ScoreArea" type="Area2D" parent="."]
+collision_layer = 8
+script = ExtResource("3_qgwjh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreArea"]
+shape = SubResource("SegmentShape2D_1vmj4")
+debug_color = Color(0.0588235, 0.819608, 0, 0.419608)

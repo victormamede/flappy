@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgo87fi7fcepw"]
+
+[ext_resource type="PackedScene" uid="uid://db7ykq0uak2ox" path="res://scenes/pipes.tscn" id="1_ck7wl"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Pipes" parent="." instance=ExtResource("1_ck7wl")]
+position = Vector2(212, 136)

@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://jd1orekwl0lc"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_ledkh"]
+script/source = "using Godot;
+
+namespace Flappy
+{
+    public partial class Messenger : Node
+    {
+        [Signal] public delegate void GameStartedEventHandler();
+        [Signal] public delegate void GameEndedEventHandler();
+
+        public static Messenger Instance;
+
+        public Messenger()
+        {
+            Instance = this;
+        }
+
+        public override void _Ready()
+        {
+            GameStarted += () => GD.Print(\"Start called\");
+            GameEnded += () => GD.Print(\"End called\");
+        }
+    }
+}
+"
+
+[node name="Messenger" type="Node"]
+script = SubResource("CSharpScript_ledkh")
